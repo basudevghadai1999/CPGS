@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            position: relative; /* Added position relative for proper positioning */
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        #summary {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-align: left;
+        }
+        .parking-lot {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        .parking-spot {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .available {
+            background-color: #00FF00;
+        }
+        .occupied {
+            background-color: #FF0000;
+        }
+    </style>
+</head>
+<body>
+    <div id="summary">
+        Total Boxes: <span id="totalBoxes">0</span><br>
+        Total Occupied: <span id="totalRedBoxes">0</span><br>
+        Total Available: <span id="totalGreenBoxes">0</span>
+    </div>
+    <h1>Parking Lot</h1>
+    <div id="parkingLot" class="parking-lot"></div>
+
+    <script>
+        // Function to generate a random boolean (true or false)
+        function getRandomStatus() {
+            return Math.random() < 0.5;
+        }
+
+        // Function to generate the parking spots
+        function generateParkingLot() {
+            const parkingLot = document.getElementById('parkingLot');
+            const totalSlots = 10;
+            let totalRedBoxes = 0;
+            let totalGreenBoxes = 0;
+
+            for (let i = 1; i <= totalSlots; i++) {
+                const spot = document.createElement('div');
+                spot.classList.add('parking-spot');
+
+                // Assign random status
+                if (getRandomStatus()) {
+                    spot.classList.add('available');
+                    totalGreenBoxes++;
+                } else {
+                    spot.classList.add('occupied');
+                    totalRedBoxes++;
+                }
+
+                parkingLot.appendChild(spot);
+            }
+
+            // Update summary
+            document.getElementById('totalBoxes').innerText = totalSlots;
+            document.getElementById('totalRedBoxes').innerText = totalRedBoxes;
+            document.getElementById('totalGreenBoxes').innerText = totalGreenBoxes;
+        }
+
+        // Call the function to generate the parking lot
+        generateParkingLot();
+    </script>
+</body>
+</html>
